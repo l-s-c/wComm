@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<table class="table table-condensed">
+	<caption>在线用户列表</caption>
+	<thead>
+		<tr>
+			<th>userId</th>
+			<th>channel</th>
+			<th>操作</th>
+		</tr>
+	</thead>
+	<tbody id="tBody">
+		<tr>
+			<td>Tanmay</td>
+			<td>Bangalore</td>
+			<td>560001</td>
+		</tr>
+		<tr>
+			<td>Sachin</td>
+			<td>Mumbai</td>
+			<td>400003</td>
+		</tr>
+		<tr>
+			<td>Uma</td>
+			<td>Pune</td>
+			<td>411027</td>
+		</tr>
+	</tbody>
+</table>
+
+<script type="text/javascript">
+	$(function(){
+		getUserList();
+	});
+	//获取用户列表
+	function getUserList(){
+		var url = "/user/getUserList";
+		$.get(url,function(res){
+			if("1" == res.code){
+				addUserList(res.data);
+			}else{
+				alert(res.msg);
+			}
+		});
+	}
+	//添加列表
+	function addUserList(data){
+		var keys = Object.keys(data);
+		var values = Object.values(data);
+		$('#tBody').empty();
+		var tr =    '<tr>'
+				+	'	<td>[userId]</td>'
+				+	'	<td>[channel]</td>'
+				+	'	<td>操作</td>'
+				+	'</tr>';
+		if(keys){
+			for(var i=0;i<keys.length;i++){
+				var t = tr.replace('[userId]',keys[i]).replace('[channel]',values[i]);
+				$('#tBody').append(t);
+	　　　　　}
+		}
+	}
+</script>
+</body>
+</html>
